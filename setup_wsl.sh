@@ -1,29 +1,28 @@
-# 1. Update system packages
+#!/bin/bash
+
+# Update system packages
 sudo apt update && sudo apt upgrade -y
 
-# 2. Install prerequisite tools
-sudo apt install -y software-properties-common curl
+# Install curl and prerequisite tools
+sudo apt install -y curl software-properties-common
 
-# 3. Add deadsnakes PPA for newer Python versions
-sudo add-apt-repository ppa:deadsnakes/ppa
+# Add deadsnakes PPA for latest Python versions
+sudo add-apt-repository -y ppa:deadsnakes/ppa
 sudo apt update
 
-# 4. Install Python 3.12
-sudo apt install -y python3.12
+# Install Python 3.12 and venv module
+sudo apt install -y python3.12 python3.12-venv
 
-# 5. (Manual) Install pip for Python 3.12 (distutils not available via apt)
-curl -O https://bootstrap.pypa.io/get-pip.py
-python3.12 get-pip.py
+# Install pip using ensurepip and upgrade it
+python3.12 -m ensurepip --upgrade
+python3.12 -m pip install --upgrade pip
 
-# 6. Create alias for easy access
-echo "alias py3='python3.12'" >> ~/.bashrc
-echo "alias pip='py3 -m pip'" >> ~/.bashrc
-source ~/.bashrc
+# Add local pip to PATH in current shell session
+export PATH="$HOME/.local/bin:$PATH"
 
-# 7. Create a virtual environment (recommended for development)
-# Run this inside your project directory
-py3 -m venv .venv
-source .venv/bin/activate
+# Create virtual environment
+python3.12 -m venv ~/.my_py3_venv
 
-# 8. Upgrade pip and install packages
-pip install --upgrade pip
+echo "✅ Setup complete."
+echo "To activate your virtual environment, run:"
+echo "source ~/.my_py3_venv/bin/activate"
