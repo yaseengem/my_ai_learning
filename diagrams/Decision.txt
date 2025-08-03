@@ -1,0 +1,1 @@
+Drawio is an xml document. It can be directly stored in git and written by copilot.. So no need to create python for it.
